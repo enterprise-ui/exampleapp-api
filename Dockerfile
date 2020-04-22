@@ -12,8 +12,6 @@ COPY package.json ./
 
 COPY dist dist
 
-RUN yarn
-
 RUN chown node:node -R /home/app \
    && chmod 777 /tmp
 
