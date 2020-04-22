@@ -21,15 +21,19 @@ steps:
       - yarn
       - yarn build
 
-  - name: publish
-    image: docker:latest
-    pull: if-not-exists
-    environment:
-      DOCKER_REGISTRY_DOMAIN:
-        from_secret: DOCKER_REGISTRY_DOMAIN
-      DOCKER_AUTH_PASS:
+  - name: publish      
+    image: plugins/docker
+    settings:
+      repo: enterpriseui/exampleapp-api
+      username: ci
+      password:
         from_secret: DOCKER_AUTH_PASS
-    commands:
-      - docker build --no-cache -t enterpriseui/exampleapp-api:${DRONE_COMMIT} -f Dockerfile .
-      - docker login $DOCKER_REGISTRY_DOMAIN -u ci -p $DOCKER_AUTH_PASS
-      - docker push enterpriseui/exampleapp-api:${DRONE_COMMIT}
+      registry:
+        from_secret: DOCKER_REGISTRY_DOMAIN        
+      tag: ${DRONE_TAG}
+      when:
+        ref:
+        - refs/head/master
+        - refs/tags/*
+        event:
+        - tag     
