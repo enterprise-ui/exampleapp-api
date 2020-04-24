@@ -2,40 +2,40 @@ kind: pipeline
 name: default
 
 steps:
-  - name: config
-    image: node:current-alpine
-    environment:
-      CI_DOMAIN:
-        from_secret: CI_DOMAIN
-      NPM_AUTH_TOKEN:
-        from_secret: NPM_AUTH_TOKEN
-    commands:
-      - echo "//$CI_DOMAIN/repository/npm/:_authToken=$NPM_AUTH_TOKEN" > .npmrc
-      - echo "//$CI_DOMAIN/repository/npm-publish/:_authToken=$NPM_AUTH_TOKEN" >> .npmrc
-      - echo "registry=https://$CI_DOMAIN/repository/npm" >> .npmrc
-      - echo "always-auth=true" >> .npmrc
+  # - name: config
+  #   image: node:current-alpine
+  #   environment:
+  #     CI_DOMAIN:
+  #       from_secret: CI_DOMAIN
+  #     NPM_AUTH_TOKEN:
+  #       from_secret: NPM_AUTH_TOKEN
+  #   commands:
+  #     - echo "//$CI_DOMAIN/repository/npm/:_authToken=$NPM_AUTH_TOKEN" > .npmrc
+  #     - echo "//$CI_DOMAIN/repository/npm-publish/:_authToken=$NPM_AUTH_TOKEN" >> .npmrc
+  #     - echo "registry=https://$CI_DOMAIN/repository/npm" >> .npmrc
+  #     - echo "always-auth=true" >> .npmrc
 
-  - name: build
-    image: node:current-alpine
-    commands:
-      - yarn
-      - yarn build
+  # - name: build
+  #   image: node:current-alpine
+  #   commands:
+  #     - yarn
+  #     - yarn build
 
-  - name: publish
-    image: plugins/docker
-    settings:
-      repo: docker-registry.enterprise-ui.com/enterpriseui/exampleapp-api
-      username: ci
-      password:
-        from_secret: DOCKER_AUTH_PASS
-      registry: docker-registry.enterprise-ui.com
-      tag: ${DRONE_TAG}
-    when:
-      ref:
-      - refs/head/master
-      - refs/tags/*
-      event:
-      - tag
+  # - name: publish
+  #   image: plugins/docker
+  #   settings:
+  #     repo: docker-registry.enterprise-ui.com/enterpriseui/exampleapp-api
+  #     username: ci
+  #     password:
+  #       from_secret: DOCKER_AUTH_PASS
+  #     registry: docker-registry.enterprise-ui.com
+  #     tag: ${DRONE_TAG}
+  #   when:
+  #     ref:
+  #     - refs/head/master
+  #     - refs/tags/*
+  #     event:
+  #     - tag
 
   - name: deploy
     image: alpine/helm
@@ -43,7 +43,7 @@ steps:
       KUBECFG:
         from_secret: KUBECFG
     commands:
-      - cat $KUBECFG > kubeconfig.yaml
+      - echo $KUBECFG > kubeconfig.yaml
       - export KUBECONFIG=$(pwd)/kubeconfig.yaml
       - kubectl get pods
     # when:
