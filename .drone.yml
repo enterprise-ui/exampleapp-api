@@ -43,8 +43,7 @@ steps:
       KUBECFG:
         from_secret: KUBECFG
     commands:
-      - echo bGludXggYmFzZTY0IGRlY29kZQo= | base64 -d 
-      #echo $KUBECFG > kubeconfig.yaml
+      - echo $KUBECFG | base64 -d > kubeconfig.yaml
       - export KUBECONFIG=$(pwd)/kubeconfig.yaml
       - kubectl get pods
     # when:
