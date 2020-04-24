@@ -38,7 +38,7 @@ steps:
   #     - tag
 
   - name: deploy
-    image: alpine/helm
+    image: alpine/k8s
     environment:
       KUBECFG:
         from_secret: KUBECFG
