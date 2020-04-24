@@ -30,12 +30,12 @@ steps:
         from_secret: DOCKER_AUTH_PASS
       registry: docker-registry.enterprise-ui.com
       tag: ${DRONE_TAG}
-      when:
-        ref:
-        - refs/head/master
-        - refs/tags/*
-        event:
-        - tag
+    when:
+      ref:
+      - refs/head/master
+      - refs/tags/*
+      event:
+      - tag
 
   - name: deploy
     image: alpine/helm
@@ -46,9 +46,9 @@ steps:
       - cat $KUBECFG > kubeconfig.yaml
       - export KUBECONFIG=$(pwd)/kubeconfig.yaml
       - kubectl get pods
-    when:
-      ref:
-      - refs/head/master
-      - refs/tags/*
-      event:
-      - tag
+    # when:
+    #   ref:
+    #   - refs/head/master
+    #   - refs/tags/*
+    #   event:
+    #   - tag
