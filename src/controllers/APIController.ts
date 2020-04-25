@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { Controller, Middleware, Get, Put, Post, Delete } from '@overnightjs/core'
 import { getManager } from 'typeorm'
 
-@Controller('')
+@Controller('/')
 export class APIController {
 
   @Get('/hello')
