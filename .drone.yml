@@ -3,7 +3,7 @@ name: default
 
 steps:
   - name: config
-    image: node:current-alpine
+    image: node:lts-alpine
     environment:
       CI_DOMAIN:
         from_secret: CI_DOMAIN
@@ -16,7 +16,7 @@ steps:
       - echo "always-auth=true" >> .npmrc
 
   - name: build
-    image: node:current-alpine
+    image: node:lts-alpine
     commands:
       - yarn
       - yarn build
@@ -48,7 +48,7 @@ steps:
       - export DOMAIN=api.exampleapp.${ROOTDOMAIN}
       - export REGISTRYDOMAIN=docker-registry.${ROOTDOMAIN}
       - |
-        helm upgrade --install exampleapp-api ./chart \
+        helm upgrade --install exampleapp-api .chart \
         --set image.tag=${DRONE_TAG} \
         --set image.repository=${REGISTRYDOMAIN}/enterpriseui/exampleapp-api
         --set ingress.enabled=true \
