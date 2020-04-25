@@ -79,7 +79,7 @@ spec:
             - name: DB_PASSWORD
               value: {{ .Values.app.DB_PASSWORD | quote }}
             - name: DB_SYNC
-              value: true
+              value: "true"
           volumeMounts:
 {{- if .Values.nodeSelector }}
       nodeSelector:
