@@ -63,7 +63,7 @@ steps:
         --set ingress.annotations."kubernetes\.io/ingress\.class"=nginx \
         --set ingress.annotations."nginx\.ingress\.kubernetes\.io/proxy-body-size"=100m \
         --set ingress.annotations."cert-manager\.io\/cluster-issuer"="letsencrypt-prod" \
-        --set ingress.hosts[0]=${DOMAIN} \
+        --set ingress.hosts[0]=$DOMAIN \
         --set ingress.tls[0].hosts[0]=$DOMAIN \
         --set ingress.tls[0].secretName=$DOMAIN-tls
         
