@@ -22,7 +22,7 @@ steps:
       - yarn build
 
   - name: publish
-    image: plugins/docker
+    image: plugins/docker:18.09
     settings:
       repo: docker-registry.enterprise-ui.com/enterpriseui/exampleapp-api
       username: ci
