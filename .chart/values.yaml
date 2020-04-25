@@ -33,7 +33,8 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: LoadBalancer
+  name: exampleapp-api
+  type: ClusterIP
   port: 80
 
 ingress:
