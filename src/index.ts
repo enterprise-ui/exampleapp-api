@@ -10,11 +10,11 @@ import { Server } from './Server'
 
 dotenv({ path: resolve(__dirname, `../.env.${process.env.NODE_ENV}`) })
 // After dotenv initialization
-import * as dbconfig from './config/TypeORM'
+// import * as dbconfig from './config/TypeORM'
 
-createConnection(dbconfig).then(async (connection: any) => {
+// createConnection(dbconfig).then(async (connection: any) => {
 
   const server = new Server()
   server.start(Number(process.env.PORT))
 
-}).catch((error: any) => console.log("TypeORM connection error: ", error));
+// }).catch((error: any) => console.log("TypeORM connection error: ", error));
