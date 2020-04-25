@@ -12,6 +12,8 @@ COPY package.json ./
 
 COPY dist dist
 
+COPY node_modules node_modules
+
 RUN chown node:node -R /home/app \
    && chmod 777 /tmp
 
