@@ -40,6 +40,7 @@ steps:
     #   event:
     #   - tag
 
+    
   - name: deploy
     image: dtzar/helm-kubectl:3.2.0
     pull: if-not-exists
