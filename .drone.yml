@@ -48,7 +48,7 @@ steps:
       - export DOMAIN=api.exampleapp.${ROOTDOMAIN}
       - export REGISTRYDOMAIN=docker-registry.${ROOTDOMAIN}
       - |
-        helm upgrade --install exampleapp-api \
+        helm upgrade --install exampleapp-api ./chart \
         --set image.tag=${DRONE_TAG} \
         --set image.repository=${REGISTRYDOMAIN}/enterpriseui/exampleapp-api
         --set ingress.enabled=true \
@@ -57,8 +57,8 @@ steps:
         --set ingress.annotations."cert-manager\.io\/cluster-issuer"="letsencrypt-prod" \
         --set ingress.hosts[0]=${DOMAIN} \
         --set ingress.tls[0].hosts[0]=${DOMAIN} \
-        --set ingress.tls[0].secretName=${DOMAIN}-tls \
-        ./chart
+        --set ingress.tls[0].secretName=${DOMAIN}-tls
+        
     # when:
     #   ref:
     #   - refs/head/master
