@@ -21,6 +21,7 @@ steps:
     pull: if-not-exists
     commands:
       - yarn
+      - yarn list
       - yarn build
 
   - name: publish
