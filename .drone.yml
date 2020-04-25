@@ -47,7 +47,7 @@ steps:
     environment:
       KUBE_CFG:
         from_secret: KUBE_CFG
-      ROOTDOMAIN:
+      ROOT_DOMAIN:
         from_secret: ROOT_DOMAIN
     commands:
       - echo $KUBE_CFG | base64 -d > kubeconfig.yaml
