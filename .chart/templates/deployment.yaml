@@ -66,6 +66,20 @@ spec:
           resources:
 {{ toYaml .Values.resources | indent 12 }}
           env:
+            - name: PORT
+              value: 8080
+            - name: DB_HOST
+              value: {{ .Values.app.DB_HOST }}
+            - name: DB_PORT
+              value: {{ .Values.app.DB_PORT }}
+            - name: DB_NAME
+              value: {{ .Values.app.DB_NAME }}
+            - name: DB_USER
+              value: {{ .Values.app.DB_USER }}
+            - name: DB_PASSWORD
+              value: {{ .Values.app.DB_PASSWORD }}
+            - name: DB_SYNC
+              value: true
           volumeMounts:
 {{- if .Values.nodeSelector }}
       nodeSelector:

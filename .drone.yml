@@ -67,7 +67,12 @@ steps:
         --set ingress.annotations."cert-manager\.io\/cluster-issuer"="letsencrypt-prod" \
         --set ingress.hosts[0]=$DOMAIN \
         --set ingress.tls[0].hosts[0]=$DOMAIN \
-        --set ingress.tls[0].secretName=$DOMAIN-tls   
+        --set ingress.tls[0].secretName=$DOMAIN-tls \
+        --set app.DB_HOST=$DB_HOST \
+        --set app.DB_PORT=$DB_PORT \
+        --set app.DB_NAME=$DB_NAME \
+        --set app.DB_USER=$DB_USER \
+        --set app.DB_PASSWORD=$DB_PASSWORD
     when:
       ref:
       - refs/head/master
