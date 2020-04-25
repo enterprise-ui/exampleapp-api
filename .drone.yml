@@ -4,6 +4,7 @@ name: default
 steps:
   - name: config
     image: node:lts-alpine
+    pull: if-not-exists
     environment:
       CI_DOMAIN:
         from_secret: CI_DOMAIN
@@ -17,12 +18,14 @@ steps:
 
   - name: build
     image: node:lts-alpine
+    pull: if-not-exists
     commands:
       - yarn
       - yarn build
 
   - name: publish
     image: plugins/docker:18.09
+    pull: if-not-exists
     settings:
       repo: docker-registry.enterprise-ui.com/enterpriseui/exampleapp-api
       username: ci
@@ -39,6 +42,7 @@ steps:
 
   - name: deploy
     image: dtzar/helm-kubectl:3.2.0
+    pull: if-not-exists
     environment:
       KUBECFG:
         from_secret: KUBECFG
