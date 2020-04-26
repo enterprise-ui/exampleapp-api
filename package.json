@@ -13,7 +13,9 @@
       "dev": "ts-node src/index.ts",
       "start": "node dist/index.js",
       "importdata": "ts-node src/import.ts",
-      "typeorm": "ts-node -r tsconfig-paths/register ../../node_modules/typeorm/cli.js --config src/config/TypeORM.ts"
+      "typeorm": "ts-node -r tsconfig-paths/register ../../node_modules/typeorm/cli.js --config src/config/TypeORM.ts",
+      "tags": "node tools/tags.js",
+      "namespace": "node tools/namespace.js"
     },
     "devDependencies": {
       "@types/body-parser": "^1.19.0",
