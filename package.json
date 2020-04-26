@@ -1,6 +1,6 @@
 {
     "name": "@enterprise-ui/exampleapp-api",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "",
     "main": "dist/index.js",
     "scripts": {
@@ -15,7 +15,8 @@
       "importdata": "ts-node src/import.ts",
       "typeorm": "ts-node -r tsconfig-paths/register ../../node_modules/typeorm/cli.js --config src/config/TypeORM.ts",
       "tags": "node tools/tags.js",
-      "namespace": "node tools/namespace.js"
+      "subnamespace": "node tools/subnamespace.js",
+      "subdomain": "node tools/subdomain.js"
     },
     "devDependencies": {
       "@types/body-parser": "^1.19.0",
