@@ -23,8 +23,8 @@ steps:
       - yarn
       - yarn list --depth=0
       - yarn build
-      - yarn tags $DRONE_BRANCH > .tags
-      - yarn namespace $DRONE_BRANCH > .namespace
+      - yarn --silent tags $DRONE_BRANCH > .tags
+      - yarn --silent namespace $DRONE_BRANCH > .namespace
 
   - name: publish
     image: plugins/docker:18.09
