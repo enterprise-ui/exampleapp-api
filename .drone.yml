@@ -23,6 +23,9 @@ steps:
       - yarn
       - yarn list --depth=0
       - yarn build
+      - yarn --silent tags $DRONE_BRANCH > .tags
+      - yarn --silent subnamespace $DRONE_BRANCH > .subnamespace
+      - yarn --silent subdomain $DRONE_BRANCH > .subdomain
 
   - name: publish
     image: plugins/docker:18.09
@@ -33,13 +36,12 @@ steps:
       password:
         from_secret: DOCKER_AUTH_PASS
       registry: docker-registry.enterprise-ui.com
-      tag: ${DRONE_TAG}
+      # tag: from .tags file, $DRONE_BRANCH-version, 0.1.1-develop
     when:
-      ref:
-      - refs/head/master
-      - refs/tags/*
-      event:
-      - tag
+      branch:
+      - master
+      - develop
+      event: push
 
   - name: deploy
     image: dtzar/helm-kubectl:3.2.0
@@ -52,13 +54,17 @@ steps:
     commands:
       - echo $KUBE_CFG | base64 -d > kubeconfig.yaml
       - export KUBECONFIG=$(pwd)/kubeconfig.yaml
-      - export DOMAIN=api.exampleapp.$ROOT_DOMAIN
+      # -develop
+      - export SUBNAMESPACE=$(cat .subnamespace)
+      # .develop
+      - export SUBDOMAIN=$(cat .subdomain)
+      - export DOMAIN=api$SUBDOMAIN.exampleapp.$ROOT_DOMAIN
       - export REGISTRY_DOMAIN=docker-registry.$ROOT_DOMAIN
       - echo $DOMAIN
       - |
         helm upgrade --install exampleapp-api .chart \
-        --namespace exampleapp-api \
-        --set image.tag=$DRONE_TAG \
+        --namespace exampleapp-api$SUBNAMESPACE \
+        --set image.tag=$(cat .tags) \
         --set image.repository=$REGISTRY_DOMAIN/enterpriseui/exampleapp-api \
         --set imagePullSecrets[0].name="docker-registry-secret" \
         --set ingress.enabled=true \
@@ -74,8 +80,7 @@ steps:
         --set app.DB_USER=$DB_USER \
         --set app.DB_PASSWORD=$DB_PASSWORD
     when:
-      ref:
-      - refs/head/master
-      - refs/tags/*
-      event:
-      - tag
+      branch:
+      - master
+      - develop
+      event: push

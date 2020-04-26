@@ -8,7 +8,7 @@ export class APIController {
   @Get('hello')
   private async hello(req: Request, res: Response) {
     res.status(200).json({
-        msg: 'Hello world'
+        msg: 'Hello world2'
       })
   }
 

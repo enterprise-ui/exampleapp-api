@@ -3,3 +3,6 @@ src/**/*.js
 src/**/*.map
 coverage
 dist/
+.tags
+.subnamespace
+.subdomain
